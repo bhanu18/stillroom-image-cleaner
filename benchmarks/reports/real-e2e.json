@@ -1,0 +1,17 @@
+{
+  "real_models": true,
+  "synthetic_fixture_only": true,
+  "jobs": [
+    {
+      "mode": "automatic",
+      "status": "succeeded",
+      "warnings": []
+    },
+    {
+      "mode": "interactive",
+      "status": "succeeded",
+      "warnings": []
+    }
+  ],
+  "search": "passed"
+}

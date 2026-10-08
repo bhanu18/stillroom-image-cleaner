@@ -1,0 +1,39 @@
+{
+  "model": "sam2_5c29ad7be58484c42324548a",
+  "requested_device": "mps",
+  "host": "macOS-26.6.2-arm64-arm-64bit",
+  "architecture": "arm64",
+  "memory": 17179869184,
+  "fixtures": [
+    {
+      "fixture": "red-bag.png",
+      "cpu": {
+        "seconds": 3.1913674999959767,
+        "peak_rss": 1190805504,
+        "minimum_system_available": 3444490240,
+        "swap_delta": 0,
+        "device": "cpu"
+      },
+      "finite": true,
+      "shape": [
+        256,
+        256
+      ],
+      "mps": {
+        "seconds": 5.721169915981591,
+        "peak_rss": 528171008,
+        "minimum_system_available": 2547040256,
+        "swap_delta": 54657024,
+        "device": "mps"
+      },
+      "parity": 1.0,
+      "parity_passed": true
+    }
+  ],
+  "qualification": "compatibility_measurement",
+  "release_approved": false,
+  "remaining": [
+    "200-image held-out quality review",
+    "sustained model-switching workload"
+  ]
+}

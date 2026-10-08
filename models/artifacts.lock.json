@@ -1,0 +1,78 @@
+{
+  "siglip": {
+    "source": "google/siglip-base-patch16-224",
+    "revision": "7fd15f0689c79d79e38b1c2e2e2370a7bf2761ed",
+    "files": {
+      "model.safetensors": "2c63cb7d1f2e95ba501893cbb8faeb4ea9a3af295498d35097126228659c2af8",
+      "tokenizer_config.json": "d6423dae508cc3a129d22ea443841c111832a1a73125b8f25ea8736951698bcb",
+      "special_tokens_map.json": "2b6a1ff67a27e0df9ac0c7d93250fc0d87431c7b366b3d5669217104f9088a26",
+      "config.json": "cd85b3d28829722820bcb89a2cfbb4160e55fd359249a3044da724166a8d9688",
+      "tokenizer.json": "c6e405cb7c670d56636a9402c81023a55bc6c3c53d89cf02b92f5c5005bfe920",
+      "README.md": "86c231c4a7bf0ee2435295413ad5c7cf567c9426f00b79711ce8eda884b7a8d3",
+      "spiece.model": "1e5036bed065526c3c212dfbe288752391797c4bb1a284aa18c9a0b23fcaf8ec",
+      "preprocessor_config.json": "d11ccb80f15d358a11bdb070e92e2d889005874b7db15823d5f10d9b2533b14a"
+    },
+    "license": "Apache-2.0",
+    "approved": true,
+    "custom_code_reviewed": false,
+    "adapter": "siglip_v1",
+    "qualified_devices": [],
+    "id": "siglip_ad9da19d451886650f9f1932"
+  },
+  "birefnet": {
+    "source": "ZhengPeng7/BiRefNet",
+    "revision": "e2bf8e4460fc8fa32bba5ea4d94b3233d367b0e4",
+    "files": {
+      "model.safetensors": "9ab37426bf4de0567af6b5d21b16151357149139362e6e8992021b8ce356a154",
+      "handler.py": "b95f5806bfcd575ccff2a9f08816ae0e5d4df1e81b48797f9997f68b531404a5",
+      "requirements.txt": "bdfdd83a090d31a2acf64f7350653fa63cd8b5d9d6e0ff3e135bea7ce3786341",
+      "config.json": "c97ea21569daf66b205491a4635147dd3bc42c7c168b89d7d75b53f67ef548ae",
+      "birefnet.py": "208771ae626f653d64128fbf2d6ac9f8e645c5cc5e286258a73ec3322bbfe5ef",
+      "README.md": "ceac4a1bb69b807eac5510bff80ff5599f606ef7458bee3b54b68d866e868532",
+      "BiRefNet_config.py": "e7b8c2a74f6cea6a59553d517f71d47f2c1d90e670a13416af17c25fe2f3dc52"
+    },
+    "license": "MIT",
+    "approved": true,
+    "custom_code_reviewed": true,
+    "adapter": "birefnet_v1",
+    "qualified_devices": [],
+    "id": "birefnet_f30256cf0ac38475e5990750"
+  },
+  "sam2": {
+    "source": "facebook/sam2.1-hiera-tiny",
+    "revision": "de431c4043854a71d8101e17995dfe596bf101a5",
+    "files": {
+      "model.safetensors": "48c14467e5cf9e51870511feb72c89688e82dd74523142c0538b663e193ac2a7",
+      "sam2.1_hiera_t.yaml": "43e114f609a1af7efede061f5c186119d498acd31f118f300c07acf57d4a5eca",
+      "config.json": "860aff9751b139d83a4ad7df1e5535416fded533e0ead02625edbefcb9953cce",
+      "processor_config.json": "f8a68e865cfad115c1c2763f3d93eca7b1c622da06da2a9273eb437fb2389b6d",
+      "README.md": "dfa401b1b9358b9650ae487dd2f2bb336fd745c3609e3244adf2e97a22343857",
+      "video_preprocessor_config.json": "9fccfe5f464ec38c2f236d0e6a68e95511c80c22132fc2fa4b9f7b65f24fad95",
+      "preprocessor_config.json": "6ebf229ee259368ce4a8d4f2fe893a72b053023710853e257253939e601f583d"
+    },
+    "license": "Apache-2.0",
+    "approved": true,
+    "custom_code_reviewed": false,
+    "adapter": "sam2_v1",
+    "qualified_devices": [],
+    "id": "sam2_5c29ad7be58484c42324548a"
+  },
+  "u2net": {
+    "source": "https://github.com/xuebinqin/U-2-Net",
+    "revision": "ac7e1c817ecab7c7dff5ce6b1abba61cd213ff29",
+    "files": {
+      "model.safetensors": "e25df9bbb3ef625a8428b7dec0308645c6ffe07ec4392a981af31d826f4f69cb",
+      "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "README.md": "2dda6120b8fde9efc40f342db96087c1827b8657f98bb16b668ebe3c34f66c8f",
+      "u2net.py": "96dd7a19c7de4f13520ccfc1075ded3350ff4946493be3561b9918a46218f415"
+    },
+    "license": "Apache-2.0",
+    "checkpoint_source": "https://drive.usercontent.google.com/download?id=1rbSTGKAE-MTxBYHd-51l2hMOQPT_7EPy&export=download&confirm=t",
+    "parent_checkpoint_sha256": "e7567cde013fb64813973ce6e1ecc25a80c05c3ca7adbc5a54f3c3d90991b854",
+    "converter": "torch.weights_only+safetensors_v1",
+    "approved": true,
+    "adapter": "u2netp_v1",
+    "qualified_devices": [],
+    "id": "u2net_2f441c5c758602427f271e33"
+  }
+}

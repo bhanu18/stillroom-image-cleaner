@@ -1,0 +1,460 @@
+{
+  "reviewed": false,
+  "packages": [
+    {
+      "name": "alembic",
+      "version": "1.20.0",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "annotated-doc",
+      "version": "0.0.5",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "annotated-types",
+      "version": "0.8.0",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "anyio",
+      "version": "4.15.1",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "certifi",
+      "version": "2026.7.22",
+      "license_expression": null,
+      "license_metadata": "MPL-2.0",
+      "homepage": "https://github.com/certifi/python-certifi"
+    },
+    {
+      "name": "charset-normalizer",
+      "version": "3.5.2",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "homepage": null
+    },
+    {
+      "name": "click",
+      "version": "8.5.0",
+      "license_expression": "BSD-3-Clause",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "einops",
+      "version": "0.8.2",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "homepage": null
+    },
+    {
+      "name": "fastapi",
+      "version": "0.142.2",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "filelock",
+      "version": "4.0.12",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "fsspec",
+      "version": "2026.9.0",
+      "license_expression": "BSD-3-Clause",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "grpcio",
+      "version": "1.84.0",
+      "license_expression": "Apache-2.0",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "h11",
+      "version": "0.16.0",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "homepage": "https://github.com/python-hyper/h11"
+    },
+    {
+      "name": "h2",
+      "version": "4.4.1",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "hf-xet",
+      "version": "1.7.0",
+      "license_expression": "Apache-2.0",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "hpack",
+      "version": "4.2.0",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "httpcore",
+      "version": "1.0.9",
+      "license_expression": "BSD-3-Clause",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "httpx",
+      "version": "0.28.1",
+      "license_expression": null,
+      "license_metadata": "BSD-3-Clause",
+      "homepage": null
+    },
+    {
+      "name": "huggingface_hub",
+      "version": "0.36.2",
+      "license_expression": null,
+      "license_metadata": "Apache",
+      "homepage": "https://github.com/huggingface/huggingface_hub"
+    },
+    {
+      "name": "hyperframe",
+      "version": "6.1.0",
+      "license_expression": null,
+      "license_metadata": "The MIT License (MIT)\n\nCopyright (c) 2014 Cory Benfield\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE.\n",
+      "homepage": null
+    },
+    {
+      "name": "idna",
+      "version": "3.20",
+      "license_expression": "BSD-3-Clause",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "image-cleaning",
+      "version": "0.1.0",
+      "license_expression": null,
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.1",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "Jinja2",
+      "version": "3.1.6",
+      "license_expression": null,
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "kornia",
+      "version": "0.8.3",
+      "license_expression": null,
+      "license_metadata": "Apache-2.0",
+      "homepage": null
+    },
+    {
+      "name": "kornia_rs",
+      "version": "0.2.0",
+      "license_expression": null,
+      "license_metadata": null,
+      "homepage": "http://kornia.org"
+    },
+    {
+      "name": "Mako",
+      "version": "1.4.3",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "MarkupSafe",
+      "version": "3.0.4",
+      "license_expression": "BSD-3-Clause",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "mpmath",
+      "version": "1.3.0",
+      "license_expression": null,
+      "license_metadata": "BSD",
+      "homepage": "http://mpmath.org/"
+    },
+    {
+      "name": "networkx",
+      "version": "3.7",
+      "license_expression": "BSD-3-Clause",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.3",
+      "license_expression": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "opencv-python-headless",
+      "version": "4.14.0.94",
+      "license_expression": null,
+      "license_metadata": "Apache 2.0",
+      "homepage": "https://github.com/opencv/opencv-python"
+    },
+    {
+      "name": "opentelemetry-api",
+      "version": "1.45.1",
+      "license_expression": "Apache-2.0",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "license_expression": "Apache-2.0 OR BSD-2-Clause",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "pillow",
+      "version": "12.3.0",
+      "license_expression": "MIT-CMU",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "pluggy",
+      "version": "1.6.0",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "homepage": null
+    },
+    {
+      "name": "portalocker",
+      "version": "3.2.0",
+      "license_expression": "BSD-3-Clause",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "protobuf",
+      "version": "7.36.2",
+      "license_expression": null,
+      "license_metadata": "3-Clause BSD License",
+      "homepage": "https://developers.google.com/protocol-buffers/"
+    },
+    {
+      "name": "psutil",
+      "version": "7.2.2",
+      "license_expression": null,
+      "license_metadata": "BSD-3-Clause",
+      "homepage": "https://github.com/giampaolo/psutil"
+    },
+    {
+      "name": "pydantic",
+      "version": "2.13.5",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "pydantic_core",
+      "version": "2.46.5",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": "https://github.com/pydantic/pydantic"
+    },
+    {
+      "name": "Pygments",
+      "version": "2.21.0",
+      "license_expression": "BSD-2-Clause",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "pytest",
+      "version": "9.1.1",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "python-multipart",
+      "version": "0.0.32",
+      "license_expression": "Apache-2.0",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "PyYAML",
+      "version": "6.0.3",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "homepage": "https://pyyaml.org/"
+    },
+    {
+      "name": "qdrant-client",
+      "version": "1.19.1",
+      "license_expression": null,
+      "license_metadata": "Apache-2.0",
+      "homepage": null
+    },
+    {
+      "name": "regex",
+      "version": "2026.9.29",
+      "license_expression": "Apache-2.0 AND CNRI-Python",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "requests",
+      "version": "2.34.2",
+      "license_expression": null,
+      "license_metadata": "Apache-2.0",
+      "homepage": null
+    },
+    {
+      "name": "ruff",
+      "version": "0.16.10",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": "https://docs.astral.sh/ruff"
+    },
+    {
+      "name": "safetensors",
+      "version": "0.8.0",
+      "license_expression": null,
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "sentencepiece",
+      "version": "0.2.2",
+      "license_expression": "Apache-2.0",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "setuptools",
+      "version": "84.0.0",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "SQLAlchemy",
+      "version": "2.1.3",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "starlette",
+      "version": "1.7.0",
+      "license_expression": "BSD-3-Clause",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "sympy",
+      "version": "1.14.0",
+      "license_expression": null,
+      "license_metadata": "BSD",
+      "homepage": "https://sympy.org"
+    },
+    {
+      "name": "timm",
+      "version": "1.0.30",
+      "license_expression": null,
+      "license_metadata": "Apache-2.0",
+      "homepage": null
+    },
+    {
+      "name": "tokenizers",
+      "version": "0.22.2",
+      "license_expression": null,
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "torch",
+      "version": "2.14.1",
+      "license_expression": "Apache-2.0 AND Apache-2.0 WITH LLVM-exception AND BSD-2-Clause AND BSD-3-Clause AND BSL-1.0 AND MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "torchvision",
+      "version": "0.29.1",
+      "license_expression": null,
+      "license_metadata": "BSD",
+      "homepage": "https://github.com/pytorch/vision"
+    },
+    {
+      "name": "tqdm",
+      "version": "4.70.1",
+      "license_expression": null,
+      "license_metadata": "MPL-2.0 AND MIT",
+      "homepage": null
+    },
+    {
+      "name": "transformers",
+      "version": "4.57.6",
+      "license_expression": null,
+      "license_metadata": "Apache 2.0 License",
+      "homepage": "https://github.com/huggingface/transformers"
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.4",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0",
+      "license_expression": "PSF-2.0",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "urllib3",
+      "version": "2.8.0",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "homepage": null
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.54.0",
+      "license_expression": "BSD-3-Clause",
+      "license_metadata": null,
+      "homepage": null
+    }
+  ]
+}

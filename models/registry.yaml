@@ -1,0 +1,22 @@
+# Provisioning resolves immutable revisions and file hashes into data/models/<id>/manifest.json.
+# Qualified devices are added only by a benchmark report, never assumed from availability.
+models:
+  siglip:
+    source: google/siglip-base-patch16-224
+    license: Apache-2.0
+    adapter: siglip_v1
+    dimension: 768
+  birefnet:
+    source: ZhengPeng7/BiRefNet
+    license: MIT
+    adapter: birefnet_v1
+    custom_code_review_required: true
+  sam2:
+    source: facebook/sam2.1-hiera-tiny
+    license: Apache-2.0
+    adapter: sam2_v1
+  u2net:
+    source: https://github.com/xuebinqin/U-2-Net
+    license: Apache-2.0
+    adapter: u2netp_v1
+    checkpoint_evidence_required: true

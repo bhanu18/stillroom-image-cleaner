@@ -1,0 +1,1 @@
+{"id":"baseline_v1","version":1,"approved":true,"operations":["segment","denoise_classical","tone","inpaint_classical","upscale_lanczos","refine_mask","compose","evaluate","encode"],"parameters":{"denoise_strength":0.2},"profile":"local_m4_16gb","evidence":"deterministic baseline; not a learned quality claim"}

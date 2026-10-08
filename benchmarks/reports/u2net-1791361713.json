@@ -1,0 +1,30 @@
+{
+  "model": "u2net_2f441c5c758602427f271e33",
+  "requested_device": "cpu",
+  "host": "macOS-26.6.2-arm64-arm-64bit",
+  "architecture": "arm64",
+  "memory": 17179869184,
+  "fixtures": [
+    {
+      "fixture": "red-bag.png",
+      "cpu": {
+        "seconds": 0.9812628750223666,
+        "peak_rss": 1323892736,
+        "minimum_system_available": 7875674112,
+        "swap_delta": 0,
+        "device": "cpu"
+      },
+      "finite": true,
+      "shape": [
+        256,
+        256
+      ]
+    }
+  ],
+  "qualification": "compatibility_measurement",
+  "release_approved": false,
+  "remaining": [
+    "200-image held-out quality review",
+    "sustained model-switching workload"
+  ]
+}
