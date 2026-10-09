@@ -29,6 +29,6 @@ The application is not marked as a fully qualified production release:
 2. Retrieval improvement over the deterministic baseline is unproven. Uncalibrated evidence cannot change a recipe; calibrated selection requires reviewed workflow and calibration records.
 3. Full sustained-load/sleep-resume qualification across realistic workloads remains outstanding. Failure injection covers durable recovery but cannot replace a physical suspend/resume test.
 4. MPS remains unqualified in runtime manifests until broader adapter-specific testing passes. CPU is the default.
-5. The dependency inventory is generated, but complete redistribution notice/SBOM review and an application source-license decision remain release tasks.
+5. Redistribution remains blocked. The [checked-in evidence audit](../licenses/redistribution-audit.md), [reconciled inventory](../licenses/redistribution-inventory.json), and [partial notices](../licenses/THIRD_PARTY_NOTICES.md) cover available evidence, but exact-version upstream notices, a distribution-specific SBOM, the application source-license decision, and U²-Net checkpoint license scope remain unresolved. Model runtime approval does not clear redistribution.
 
 Optional neural restoration and the distributed server profile remain deliberately unavailable, as specified by the local architecture.

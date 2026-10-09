@@ -1,6 +1,6 @@
 # Model and dependency provenance
 
-Model binaries and upstream model code are downloaded only by explicit provisioning. The application checks each provisioned file against its manifest before inference. Archived model cards and licenses accompany each snapshot; `models/artifacts.lock.json` records the artifacts exercised during implementation.
+Model binaries and upstream model code are downloaded only by explicit provisioning. The application checks each provisioned file against its manifest before inference. Checked-in model cards cover all four snapshots, but only U²-Net has an archived LICENSE; `models/artifacts.lock.json` records the artifacts exercised during implementation.
 
 | Adapter | Source | Pinned revision | Declared license |
 |---|---|---|---|
@@ -14,3 +14,7 @@ BiRefNet inference review covered imports, filesystem/network calls, model const
 U²-Net source imports only torch modules. The legacy checkpoint is downloaded from the exact official README link and converted using restricted weights-only loading; its parent hash and conversion are recorded. Do not substitute mirror or fine-tuned weights on the basis of a repository license alone.
 
 The lockfiles pin application dependencies. A distributable release still requires a complete transitive notice/SBOM audit; model smoke checks do not complete that legal/release review. Optional restoration checkpoints are not provisioned or enabled.
+
+## Redistribution review
+
+See the [2026-10-08 evidence audit](redistribution-audit.md), [reconciled lock inventory](redistribution-inventory.json), and [partial notice bundle](THIRD_PARTY_NOTICES.md). Release gate 5 remains open. Regenerate the supplemental inventory with `python3 scripts/license_audit.py`; retain the original installed-metadata snapshot as evidence.
