@@ -4,6 +4,17 @@ Native macOS image processing with FastAPI, React/TypeScript, SQLite WAL, a supe
 
 **Release status:** implementation and automated tests are available; this is not a qualified production release. Real synthetic-fixture model checks are recorded separately from the required 200-image held-out quality evaluation. See [verification status](docs/verification.md).
 
+## Platform setup
+
+Choose the guide for each independent installation:
+
+- [Apple Silicon / MPS](docs/runbooks/apple-silicon.md): native ARM64 macOS.
+- [NVIDIA / CUDA](docs/runbooks/nvidia-cuda.md): Linux x86-64, including RunPod via SSH tunnel.
+
+Both use Python 3.12 and Node 22. Set `IMAGE_CLEANING_DEVICE=auto` (default),
+`cpu`, `mps`, or `cuda`. Automatic acceleration requires model qualification on
+that host; accelerator unavailability/OOM retries once on CPU and records a warning.
+
 ## Install and run
 
 Use ARM64 Python 3.12 and Node 22. Existing `data/`, `.env`, `.venv`, and `venv` directories are not migrated or deleted.
@@ -53,7 +64,7 @@ Runtime inference does not download weights and the macOS inference subprocess d
 
 The BiRefNet option records approval of its pinned custom Python code; consult [model provenance](licenses/README.md). Each artifact directory contains exact file hashes and an immutable source revision. Existing directories are never overwritten. U²-Net's official small checkpoint is converted with `torch.load(weights_only=True)` to safetensors during provisioning. User-supplied model weights are not accepted.
 
-Models run in disposable subprocesses, one at a time. CPU is the default; MPS is used only when explicitly qualified in the model manifest. Real checks found significant BiRefNet swap growth under the current workload; the scheduler requires additional headroom and stops a model when swap grows by more than 512 MiB. Enable the explicit lightweight fallback option when appropriate. U²-Net never substitutes for prompted SAM selection.
+Models run in disposable subprocesses, one at a time. Automatic selection prefers host-qualified CUDA on Linux or MPS on Apple Silicon, otherwise CPU. Real checks found significant BiRefNet swap growth under the current workload; the scheduler requires additional headroom and stops a model when swap grows by more than 512 MiB. Enable the explicit lightweight fallback option when appropriate. U²-Net never substitutes for prompted SAM selection.
 
 ## Qdrant
 

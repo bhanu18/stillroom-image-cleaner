@@ -7,6 +7,7 @@ from pathlib import Path
 
 import numpy as np
 
+from .devices import identity, select, validate_device
 from .domain import Problem
 from .images import neutral, normalize
 
@@ -55,7 +56,7 @@ class Registry:
 class Models:
     def __init__(self, root, device="auto", qualification=False):
         self.registry = Registry(root)
-        self.device = device
+        self.device = validate_device(device)
         self.last = {}
         self.qualification = qualification
 
@@ -63,22 +64,29 @@ class Models:
         os.environ["HF_HUB_OFFLINE"] = "1"
         os.environ["TRANSFORMERS_OFFLINE"] = "1"
         m = self.registry.manifest(name)
-        device = self.device
-        if device == "auto":
+        import torch
+
+        device = select(torch, m, self.device, self.qualification)
+        self.last = {"manifest": m["id"], "requested_device": self.device, "device": device,
+                     "dtype": "float32", "runtime": identity(torch, device)}
+        if device == "cuda":
+            torch.cuda.reset_peak_memory_stats(0)
+        return self.registry.root / name, m, device
+
+    def diagnostics(self):
+        if self.last.get("device") == "cuda":
             import torch
 
-            device = "mps" if "mps" in m.get("qualified_devices", []) and torch.backends.mps.is_available() else "cpu"
-        if device != "cpu" and device not in m.get("qualified_devices", []) and not self.qualification:
-            raise Problem("MODEL_UNAVAILABLE", f"{name} has not passed {device} qualification", 503)
-        self.last = {"manifest": m["id"], "device": device, "dtype": "float32"}
-        return self.registry.root / name, m, device
+            torch.cuda.synchronize(0)
+            self.last["peak_cuda_memory"] = torch.cuda.max_memory_allocated(0)
+        return dict(self.last)
 
     def embed(self, image=None, query=None):
         import torch
         from transformers import AutoModel, AutoProcessor
 
         path, m, device = self.load("siglip")
-        model = AutoModel.from_pretrained(path, local_files_only=True).eval().to(device)
+        model = AutoModel.from_pretrained(path, local_files_only=True).eval().float().to(device)
         processor = AutoProcessor.from_pretrained(path, local_files_only=True, use_fast=False)
         with torch.inference_mode():
             if image is not None:
@@ -89,7 +97,7 @@ class Models:
                 features = model.get_text_features(**inputs)
             if not isinstance(features, torch.Tensor):
                 features = features.pooler_output
-        return {"vector": normalize(features[0].float().cpu().numpy()), "manifest": m["id"], "diagnostics": self.last}
+        return {"vector": normalize(features[0].float().cpu().numpy()), "manifest": m["id"], "diagnostics": self.diagnostics()}
 
     def segment(self, image, mode="automatic", prompts=None, lightweight=False):
         import torch
@@ -105,6 +113,7 @@ class Models:
                 model = (
                     AutoModelForImageSegmentation.from_pretrained(path, trust_remote_code=True, local_files_only=True)
                     .eval()
+                    .float()
                     .to(device)
                 )
                 tensor = (
@@ -122,7 +131,7 @@ class Models:
             elif name == "sam2":
                 from transformers import Sam2Model, Sam2Processor
 
-                model = Sam2Model.from_pretrained(path, local_files_only=True).eval().to(device)
+                model = Sam2Model.from_pretrained(path, local_files_only=True).eval().float().to(device)
                 processor = Sam2Processor.from_pretrained(path, local_files_only=True)
                 points = (prompts or {}).get("points", [])
                 box = (prompts or {}).get("box")
@@ -168,7 +177,7 @@ class Models:
                 spec = importlib.util.spec_from_file_location("approved_u2net", path / "u2net.py")
                 module = importlib.util.module_from_spec(spec)
                 spec.loader.exec_module(module)
-                model = module.U2NETP(3, 1).eval().to(device)
+                model = module.U2NETP(3, 1).eval().float().to(device)
                 model.load_state_dict(load_file(str(path / "model.safetensors")))
                 a = np.asarray(neutral(image).resize((320, 320)), dtype=np.float32) / 255
                 a = (a - np.array([0.485, 0.456, 0.406])) / np.array([0.229, 0.224, 0.225])
@@ -176,4 +185,4 @@ class Models:
                 mask = model(tensor)[0][0, 0].float().cpu().numpy()
                 mask = (mask - mask.min()) / max(float(mask.max() - mask.min()), 1e-8)
         mask = np.asarray(Image.fromarray(mask.astype(np.float32), "F").resize(image.size, Image.Resampling.BILINEAR))
-        return {"mask": np.clip(mask, 0, 1), "diagnostics": self.last}
+        return {"mask": np.clip(mask, 0, 1), "diagnostics": self.diagnostics()}
