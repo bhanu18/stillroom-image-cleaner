@@ -2,6 +2,8 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 
+from .devices import validate_device
+
 ROOT = Path(__file__).resolve().parent.parent
 TENANT = "00000000-0000-4000-8000-000000000001"
 
@@ -19,10 +21,15 @@ class Settings:
     lease_seconds: int = 60
     qdrant_url: str = "http://127.0.0.1:6333"
     retention_days: int = 30
+    device: str = "auto"
+
+    def __post_init__(self):
+        validate_device(self.device)
 
     @classmethod
     def env(cls):
         return cls(
+            device=os.getenv("IMAGE_CLEANING_DEVICE", "auto"),
             data=Path(os.getenv("IMAGE_CLEANING_DATA", str(cls.data))),
             origin=os.getenv("IMAGE_CLEANING_ORIGIN", cls.origin),
             qdrant_url=os.getenv("QDRANT_URL", cls.qdrant_url),

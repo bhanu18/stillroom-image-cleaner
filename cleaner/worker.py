@@ -14,6 +14,7 @@ from sqlalchemy import text
 
 from .config import TENANT, Settings
 from .db import Database, digest, dumps, now, uid
+from .devices import accelerator_oom
 from .domain import Problem
 from .images import analyze, compose, decode, exports, png, restore
 from .memory import MemoryIndex, plan
@@ -23,7 +24,8 @@ from .storage import Storage
 log = logging.getLogger(__name__)
 
 
-def child_call(conn, root, operation, args):
+def child_call(conn, root, operation, args, device="auto"):
+    model = None
     try:
         from .sandbox import restrict_child
 
@@ -32,7 +34,7 @@ def child_call(conn, root, operation, args):
             image, transform = decode(Path(args["path"]).read_bytes())
             result = {"png": png(image), "transform": transform, "size": image.size}
         else:
-            model = Models(root)
+            model = Models(root, device=device)
             image = Image.open(args["path"]).convert("RGBA") if args.get("path") else None
             if operation == "embed":
                 result = model.embed(image=image, query=args.get("query"))
@@ -44,10 +46,18 @@ def child_call(conn, root, operation, args):
     except Problem as e:
         conn.send(("error", {"code": e.code, "detail": e.detail, "status": e.status}))
     except Exception as e:
-        code = "INFERENCE_OOM" if "out of memory" in str(e).lower() else "MODEL_UNAVAILABLE"
+        actual = model.last.get("device") if model else None
+        if accelerator_oom(e, actual):
+            code = "ACCELERATOR_OOM"
+        else:
+            code = "INFERENCE_OOM" if "out of memory" in str(e).lower() else "MODEL_UNAVAILABLE"
         conn.send(("error", {"code": code, "detail": f"{type(e).__name__}: {str(e)[:300]}", "status": 503}))
     finally:
         conn.close()
+
+
+def fallback_warnings(result):
+    return ["accelerator_cpu_fallback"] if result.get("diagnostics", {}).get("fallback_reason") else []
 
 
 class Worker:
@@ -65,6 +75,35 @@ class Worker:
     def run_model(self, job, operation, **args):
         if self.runner:
             return self.runner(operation, **args)
+        started = time.monotonic()
+        deadline = min(job.get("deadline", now() + self.settings.deadline_seconds),
+                       now() + self.settings.deadline_seconds)
+        requested = "cpu" if operation == "decode" else self.settings.device
+        fallback = None
+        try:
+            value = self._model_attempt(job, operation, args, requested, deadline)
+        except Problem as error:
+            if requested == "cpu" or error.code not in ("ACCELERATOR_UNAVAILABLE", "ACCELERATOR_OOM"):
+                raise
+            fallback = error.code
+            value = self._model_attempt(job, operation, args, "cpu", deadline)
+        diagnostics = value.setdefault("diagnostics", {})
+        diagnostics.update(requested_device=requested, seconds=time.monotonic() - started, operation=operation)
+        if fallback:
+            diagnostics["fallback_reason"] = fallback
+        log.info("inference_completed", extra={"job_id": job["id"], **diagnostics})
+        with self.db.tx() as c:
+            self.db.guard(c, job)
+            c.execute(
+                text("UPDATE attempts SET diagnostics=:d WHERE job_id=:j AND token=:t AND stage=:s"),
+                {"d": dumps(diagnostics), "j": job["id"], "t": job["token"], "s": job["stage"]},
+            )
+        return value
+
+    def _model_attempt(self, job, operation, args, device, deadline):
+        self.db.heartbeat(job)
+        if now() >= deadline:
+            raise Problem("DEADLINE_EXCEEDED", "Inference timed out")
         model_name = (
             "siglip"
             if operation == "embed"
@@ -87,7 +126,7 @@ class Worker:
             )
         ctx = mp.get_context("spawn")
         read, write = ctx.Pipe(duplex=False)
-        process = ctx.Process(target=child_call, args=(write, self.settings.data, operation, args))
+        process = ctx.Process(target=child_call, args=(write, self.settings.data, operation, args, device))
         process.start()
         write.close()
         started = time.monotonic()
@@ -107,9 +146,15 @@ class Worker:
                     raise Problem("RESOURCE_PRESSURE", "Inference stopped to preserve system memory", 503)
                 if not process.is_alive():
                     raise Problem("MODEL_UNAVAILABLE", "Inference process exited unexpectedly", 503)
-                if time.monotonic() - started > self.settings.deadline_seconds:
+                if now() >= deadline:
                     raise Problem("DEADLINE_EXCEEDED", "Inference timed out")
-            status, value = read.recv()
+            self.db.heartbeat(job)
+            if now() >= deadline:
+                raise Problem("DEADLINE_EXCEEDED", "Inference timed out")
+            try:
+                status, value = read.recv()
+            except EOFError as error:
+                raise Problem("MODEL_UNAVAILABLE", "Inference child exited without a result", 503) from error
             if status == "error":
                 raise Problem(**value)
             self.db.heartbeat(job)
@@ -120,13 +165,6 @@ class Worker:
                 **value.get("diagnostics", {}),
             }
             value["diagnostics"] = diagnostics
-            log.info("inference_completed", extra={"job_id": job["id"], **diagnostics})
-            with self.db.tx() as c:
-                self.db.guard(c, job)
-                c.execute(
-                    text("UPDATE attempts SET diagnostics=:d WHERE job_id=:j AND token=:t AND stage=:s"),
-                    {"d": dumps(diagnostics), "j": job["id"], "t": job["token"], "s": job["stage"]},
-                )
             return value
         finally:
             if process.is_alive():
@@ -221,6 +259,7 @@ class Worker:
             )
         try:
             embedding = self.embed_asset(job, asset)
+            warnings += fallback_warnings(embedding)
         except Problem as e:
             if e.code in ("LEASE_LOST", "DEADLINE_EXCEEDED", "MODEL_INTEGRITY"):
                 raise
@@ -281,6 +320,7 @@ class Worker:
                 warnings.append("lightweight_fallback")
             mask = result["mask"]
             model_info = result["diagnostics"]
+            warnings += fallback_warnings(result)
             if refinement:
                 ref = self.db.asset(refinement)
                 mask *= (
@@ -362,7 +402,7 @@ class Worker:
             t=TENANT,
             n=now(),
         )["n"]
-        self.finish(job, {"results": ranked[: req["limit"]], "indexed": len(rows), "total": total})
+        self.finish(job, {"results": ranked[: req["limit"]], "indexed": len(rows), "total": total}, fallback_warnings(embedding))
 
     def tick(self):
         with self.db.tx() as c:
@@ -377,7 +417,8 @@ class Worker:
             elif job["kind"] == "search":
                 self.search(job)
             elif job["kind"] == "index":
-                self.finish(job, self.embed_asset(job, self.db.asset(job["asset_id"])))
+                result = self.embed_asset(job, self.db.asset(job["asset_id"]))
+                self.finish(job, result, fallback_warnings(result))
             else:
                 self.image(job)
         except Exception as e:

@@ -28,7 +28,8 @@ def main():
     a = sub.add_parser("qualify")
     a.add_argument("model", choices=["siglip", "birefnet", "sam2", "u2net"])
     a.add_argument("--fixtures", required=True)
-    a.add_argument("--device", choices=["cpu", "mps"], default="cpu")
+    a.add_argument("--device", choices=["cpu", "mps", "cuda"], default="cpu")
+    a.add_argument("--approve-device", action="store_true", help="Approve this host/runtime after all checks pass")
     args = parser.parse_args()
     settings = Settings.env()
     if args.command == "serve":
@@ -99,7 +100,7 @@ def main():
     elif args.command == "qualify":
         from .benchmark import qualify
 
-        print(json.dumps(qualify(settings.data, args.model, Path(args.fixtures), args.device), indent=2))
+        print(json.dumps(qualify(settings.data, args.model, Path(args.fixtures), args.device, args.approve_device), indent=2))
     else:
         from .db import Database
         from .lifecycle import backup, replay
